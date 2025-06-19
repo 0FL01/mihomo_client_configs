@@ -168,10 +168,6 @@ rules:
   - DOMAIN-SUFFIX,playoverwatch.com,DIRECT
 
   # ПРАВИЛО №4: Прямое соединение для BitTorrent
-  - PROCESS-NAME,qbittorrent.exe,DIRECT
-  - PROCESS-NAME,transmission,DIRECT
-  - PROCESS-NAME,utorrent.exe,DIRECT
-  - PROCESS-NAME,deluge,DIRECT
   - DST-PORT,6881-6889,DIRECT
   - DST-PORT,51413,DIRECT
 
