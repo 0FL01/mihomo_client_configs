@@ -128,8 +128,8 @@ proxy-groups:
 
 # --- НАСТРОЙКИ GEO-ДАННЫХ ---
 geox-url:
-  geosite: "https://github.com/jameszeroX/zkeen-domains/releases/latest/download/zkeen.dat"
-  geoip: "https://github.com/v2fly/geoip/releases/download/202506050146/geoip.dat"
+  geosite: "https://github.com/v2fly/domain-list-community/releases/latest/download/dlc.dat"
+  geoip: "https://github.com/0FL01/meta-rules-dat_FOR_RU_REGION/releases/latest/download/geoip.dat"
 
 # --- ПРОВАЙДЕРЫ ПРАВИЛ ---
 rule-providers:
