@@ -1,7 +1,8 @@
+---
+
 Это готовый к использованию конфигурационный файл для ядра [mihomo](https://github.com/MetaCubeX/mihomo), оптимизированный для пользователей в России. Основная цель — обеспечить стабильное, быстрое и бесшовное соединение, автоматически переключаясь между прокси и прямым подключением при сбоях.
 
 ![image](https://github.com/user-attachments/assets/c39053f9-96a6-4e82-90fb-b3e0c1fdaf97)
-
 
 ## Основные возможности
 
@@ -26,7 +27,9 @@
 ## Быстрый старт
 
 1.  Скачайте файл `config-fallback-sub.yml`.
+
 2.  Откройте файл в текстовом редакторе.
+
 3.  Найдите секцию `proxy-providers` и вставьте URL вашей прокси-подписки в поле `url`.
 
     ```yaml
@@ -34,16 +37,37 @@
       subscription:
         type: http
         # Вставьте вашу ссылку сюда
-        url: https://sub.sub 
+        url: https://sub.sub.com/54j54kjdj
         # ...
     ```
 
-4.  Переименуйте `config-fallback-sub.yml` в `config.yml` и переместите в рабочую директорию `mihomo` и запустите ядро.
+4.  **Загрузите файл GeoSite.** Этот файл необходим для корректной маршрутизации по доменным именам. Выполните в терминале следующую команду в будущей рабочей директории `mihomo`:
+
+    ```bash
+    curl -L -o dlc.dat https://github.com/v2fly/domain-list-community/releases/download/$(curl -s https://api.github.com/repos/v2fly/domain-list-community/releases/latest | grep -o '"tag_name": "[^"]*' | cut -d'"' -f4)/dlc.dat && mv dlc.dat GeoSite.dat
+    ```
+
+5.  Переименуйте `config-fallback-sub.yml` в `config.yml`, переместите его вместе с `GeoSite.dat` в рабочую директорию `mihomo` и запустите ядро.
 
 ## Настройка под себя
 
 *   **Правила маршрутизации** находятся в секции `rules`. Вы можете добавлять, изменять или удалять их в соответствии с вашими потребностями.
 *   **Настройки проверки доступности прокси** (интервалы) можно изменить в секциях `proxy-providers` и `proxy-groups`.
+
+## Автоматическое обновление GeoSite
+
+База доменов GeoSite регулярно обновляется. Чтобы ваша конфигурация всегда использовала актуальные данные, рекомендуется настроить автоматическое обновление. В системах Linux и macOS для этого удобно использовать планировщик задач `cron`.
+
+1.  Откройте редактор `crontab` командой:
+    ```bash
+    crontab -e
+    ```
+
+2.  Добавьте в конец файла следующую строку для ежедневного обновления в 4:20 утра:
+    ```crontab
+    # Ежедневное обновление GeoSite для mihomo
+    20 4 * * * cd /opt/etc/mihomo/ && curl -L -o dlc.dat https://github.com/v2fly/domain-list-community/releases/download/$(curl -s https://api.github.com/repos/v2fly/domain-list-community/releases/latest | grep -o '"tag_name": "[^"]*' | cut -d'"' -f4)/dlc.dat && mv dlc.dat GeoSite.dat
+    ```
 
 ## Отказ от ответственности
 
