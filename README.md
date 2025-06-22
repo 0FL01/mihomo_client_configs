@@ -60,6 +60,7 @@
 
 1.  Откройте редактор `crontab` командой:
     ```bash
+    export EDITOR=nano
     crontab -e
     ```
 
