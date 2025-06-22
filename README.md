@@ -47,7 +47,7 @@
     cd /opt/etc/mihomo && curl -L -o GeoSite.dat https://github.com/v2fly/domain-list-community/releases/download/$(curl -s https://api.github.com/repos/v2fly/domain-list-community/releases/latest | jq -r .tag_name)/dlc.dat
     ```
 
-5.  Переименуйте `config-fallback-sub.yml` в `config.yml`, переместите его вместе с `GeoSite.dat` в рабочую директорию `mihomo` и запустите ядро.
+5.  Переименуйте `config-fallback-sub.yml` в `config.yml`, переместите его вместе с `GeoSite.dat` в рабочую директорию `/opt/etc/mihomo/` и запустите ядро.
 
 ## Настройка под себя
 
