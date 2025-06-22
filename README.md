@@ -44,7 +44,7 @@
 4.  **Загрузите файл GeoSite.** Этот файл необходим для корректной маршрутизации по доменным именам. Выполните в терминале следующую команду в будущей рабочей директории `mihomo`:
 
     ```bash
-    curl -L -o dlc.dat https://github.com/v2fly/domain-list-community/releases/download/$(curl -s https://api.github.com/repos/v2fly/domain-list-community/releases/latest | grep -o '"tag_name": "[^"]*' | cut -d'"' -f4)/dlc.dat && mv dlc.dat GeoSite.dat
+    cd /opt/etc/mihomo && curl -L -o GeoSite.dat https://github.com/v2fly/domain-list-community/releases/download/$(curl -s https://api.github.com/repos/v2fly/domain-list-community/releases/latest | jq -r .tag_name)/dlc.dat
     ```
 
 5.  Переименуйте `config-fallback-sub.yml` в `config.yml`, переместите его вместе с `GeoSite.dat` в рабочую директорию `mihomo` и запустите ядро.
@@ -66,7 +66,7 @@
 2.  Добавьте в конец файла следующую строку для ежедневного обновления в 4:20 утра:
     ```crontab
     # Ежедневное обновление GeoSite для mihomo
-    20 4 * * * cd /opt/etc/mihomo/ && curl -L -o dlc.dat https://github.com/v2fly/domain-list-community/releases/download/$(curl -s https://api.github.com/repos/v2fly/domain-list-community/releases/latest | grep -o '"tag_name": "[^"]*' | cut -d'"' -f4)/dlc.dat && mv dlc.dat GeoSite.dat
+    20 4 * * * cd /opt/etc/mihomo && curl -L -o GeoSite.dat https://github.com/v2fly/domain-list-community/releases/download/$(curl -s https://api.github.com/repos/v2fly/domain-list-community/releases/latest | jq -r .tag_name)/dlc.dat
     ```
 
 ## Отказ от ответственности
