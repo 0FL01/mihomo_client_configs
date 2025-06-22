@@ -34,7 +34,7 @@
       subscription:
         type: http
         # Вставьте вашу ссылку сюда
-        url: https://sub.just-another-domain.uk/NamNyD0GbNkRDqq6 
+        url: https://sub.sub 
         # ...
     ```
 
