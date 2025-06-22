@@ -65,7 +65,6 @@
 
 2.  Добавьте в конец файла следующую строку для ежедневного обновления в 4:20 утра:
     ```crontab
-    # Ежедневное обновление GeoSite для mihomo
     20 4 * * * cd /opt/etc/mihomo && curl -L -o GeoSite.dat https://github.com/v2fly/domain-list-community/releases/download/$(curl -s https://api.github.com/repos/v2fly/domain-list-community/releases/latest | jq -r .tag_name)/dlc.dat
     ```
 
