@@ -41,33 +41,12 @@
         # ...
     ```
 
-4.  **Загрузите файл GeoSite.** Этот файл необходим для корректной маршрутизации по доменным именам. Выполните в терминале следующую команду в будущей рабочей директории `mihomo`:
-
-    ```bash
-    cd /opt/etc/mihomo && curl -L -o GeoSite.dat https://github.com/v2fly/domain-list-community/releases/download/$(curl -s https://api.github.com/repos/v2fly/domain-list-community/releases/latest | jq -r .tag_name)/dlc.dat
-    ```
-
-5.  Переименуйте `config-fallback-sub.yml` в `config.yml`, переместите его вместе с `GeoSite.dat` в рабочую директорию `/opt/etc/mihomo/` и запустите ядро.
+4.  Переименуйте `config-fallback-sub.yml` в `config.yml`, переместите его вместе с `GeoSite.dat` в рабочую директорию `/opt/etc/mihomo/` и запустите ядро.
 
 ## Настройка под себя
 
 *   **Правила маршрутизации** находятся в секции `rules`. Вы можете добавлять, изменять или удалять их в соответствии с вашими потребностями.
 *   **Настройки проверки доступности прокси** (интервалы) можно изменить в секциях `proxy-providers` и `proxy-groups`.
-
-## Автоматическое обновление GeoSite
-
-База доменов GeoSite регулярно обновляется. Чтобы ваша конфигурация всегда использовала актуальные данные, рекомендуется настроить автоматическое обновление. В системах Linux и macOS для этого удобно использовать планировщик задач `cron`.
-
-1.  Откройте редактор `crontab` командой:
-    ```bash
-    export EDITOR=nano
-    crontab -e
-    ```
-
-2.  Добавьте в конец файла следующую строку для ежедневного обновления в 4:20 утра:
-    ```crontab
-    20 4 * * * cd /opt/etc/mihomo && curl -L -o GeoSite.dat https://github.com/v2fly/domain-list-community/releases/download/$(curl -s https://api.github.com/repos/v2fly/domain-list-community/releases/latest | jq -r .tag_name)/dlc.dat
-    ```
 
 ## Отказ от ответственности
 
