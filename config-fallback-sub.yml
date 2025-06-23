@@ -128,15 +128,8 @@ geox-url:
   geosite: "https://github.com/v2fly/domain-list-community/releases/latest/download/dlc.dat"
   geoip: "https://github.com/0FL01/meta-rules-dat_for_RU_region/releases/latest/download/geoip.dat"
 
-# --- ПРОВАЙДЕРЫ ПРАВИЛ ---
+# --- ПРОВАЙДЕРЫ ПРАВИЛ --- (здесь добавлена блокировка рекламы из оидс)
 rule-providers:
-  discord-voice-ips:
-    type: http
-    behavior: ipcidr
-    format: mrs
-    url: https://github.com/legiz-ru/mihomo-rule-sets/raw/main/other/discord-voice-ip-list.mrs
-    path: ./rule-providers/discord-voice-ips.mrs
-    interval: 86400
   oisd_big:
     type: http
     behavior: domain
@@ -152,7 +145,7 @@ rules:
   - RULE-SET,oisd_big,REJECT
 
   # ПРАВИЛО №1: Домен подписки всегда напрямую
-  - DOMAIN-SUFFIX,just-another-domain.uk,DIRECT
+  - DOMAIN-SUFFIX,your-domain.com,DIRECT  # <----- ЗДЕСЬ УКАЗАТЬ ДОМЕНЫ ПОДПИСКИ, добавленые в "url: https://your_sub_domain/sub" (Если есть, т.е опционально)
 
   # ПРАВИЛО №2: Discord Voice IP через прокси
   - RULE-SET,discord-voice-ips,MAIN MODE
