@@ -27,17 +27,34 @@ sniffer:
     QUIC:
       ports: [443]
 
-# --- ПРОВАЙДЕР ПРОКСИ-СЕРВЕРОВ (ПОДПИСКА) ---
-proxy-providers:
-  subscription:
-    type: http
-    url: https://your_sub_domain/sub               #  <------------ ЗДЕСЬ ВСТАВИТЬ ССЫЛКУ НА ВАШУ ПОДПИСКУ
-    path: ./proxy-providers/subscription.yaml
-    interval: 3600
-    health-check:
-      enable: true
-      url: http://www.msftncsi.com/ncsi.txt
-      interval: 20
+# --- СТАТИЧЕСКИЙ СПИСОК ПРОКСИ-СЕРВЕРОВ ---
+proxies:
+  - name: "VLESS-1"                             # Ключ №1
+    type: vless
+    server: server1.yourdomain.com  # или ип адрес, смотря что у вас настроено (если 3x-ui без домена, то ип адрес)
+    port: 443
+    uuid: "00000000-0000-0000-0000-000000000001"
+    tls: true
+    servername: server1.yourdomain.com
+    udp: true
+
+  - name: "VLESS-2"                             # Ключ №2
+    type: vless
+    server: server2.yourdomain.com  # или ип адрес, смотря что у вас настроено (если 3x-ui без домена, то ип адрес)
+    port: 443
+    uuid: "00000000-0000-0000-0000-000000000002"
+    tls: true
+    servername: server2.yourdomain.com
+    udp: true
+
+  - name: "VLESS-3"                             # Ключ №3
+    type: vless
+    server: server3.yourdomain.com  # или ип адрес, смотря что у вас настроено (если 3x-ui без домена, то ип адрес)
+    port: 443
+    uuid: "00000000-0000-0000-0000-000000000003"
+    tls: true
+    servername: server3.yourdomain.com
+    udp: true
 
 # --- СЕКЦИЯ DNS ---
 dns:
@@ -101,8 +118,10 @@ proxy-groups:
   # Группа для выбора самого быстрого из ЖИВЫХ прокси.
   - name: PROXY FASTEST
     type: url-test
-    use:
-      - subscription
+    proxies: # Используем обновленные статические прокси
+      - "VLESS-1"
+      - "VLESS-2"
+      - "VLESS-3"
     url: http://www.msftncsi.com/ncsi.txt
     # Интервал для пересортировки живых прокси по скорости
     interval: 300
@@ -112,23 +131,27 @@ proxy-groups:
   # Это гарантирует, что мы не переключимся на DIRECT, пока есть хоть один живой прокси.
   - name: PROXY FAILOVER
     type: fallback
-    use:
-      - subscription
+    proxies: # Используем обновленные статические прокси
+      - "VLESS-1"
+      - "VLESS-2"
+      - "VLESS-3"
     url: http://www.msftncsi.com/ncsi.txt
     interval: 60
 
   # Группа для ручного выбора сервера из подписки.
   - name: PROXY MANUAL
     type: select
-    use:
-      - subscription
+    proxies: # Используем обновленные статические прокси
+      - "VLESS-1"
+      - "VLESS-2"
+      - "VLESS-3"
 
 # --- НАСТРОЙКИ GEO-ДАННЫХ ---
 geox-url:
   geosite: "https://github.com/v2fly/domain-list-community/releases/latest/download/dlc.dat"
   geoip: "https://github.com/0FL01/meta-rules-dat_for_RU_region/releases/latest/download/geoip.dat"
 
-# --- ПРОВАЙДЕРЫ ПРАВИЛ --- (здесь добавлена блокировка рекламы из оидс)
+# --- ПРОВАЙДЕРЫ ПРАВИЛ ---
 rule-providers:
   oisd_big:
     type: http
@@ -144,8 +167,10 @@ rules:
   - GEOSITE,category-ads-all,REJECT
   - RULE-SET,oisd_big,REJECT
 
-  # ПРАВИЛО №1: Домен подписки всегда напрямую
-  - DOMAIN-SUFFIX,your-domain.com,DIRECT  # <----- ЗДЕСЬ УКАЗАТЬ ДОМЕНЫ ПОДПИСКИ, добавленые в "url: https://your_sub_domain/sub" (Если есть, т.е опционально)
+  # ПРАВИЛО №1: Домен vless ключа всегда напрямую
+  - DOMAIN-SUFFIX,vless-key1-domain.com,DIRECT   # <----- ЗДЕСЬ УКАЗАТЬ ДОМЕНЫ VLESS КЛЮЧЕЙ, добавленые в "server: server1.yourdomain.com" (Если есть, т.е опционально)
+  - DOMAIN-SUFFIX,vless-key2-domain.com,DIRECT   # <----- ЗДЕСЬ УКАЗАТЬ ДОМЕНЫ VLESS КЛЮЧЕЙ, добавленые в "server: server2.yourdomain.com" (Если есть, т.е опционально)
+  - DOMAIN-SUFFIX,vless-key3-domain.com,DIRECT   # <----- ЗДЕСЬ УКАЗАТЬ ДОМЕНЫ VLESS КЛЮЧЕЙ, добавленые в "server: server3.yourdomain.com" (Если есть, т.е опционально)
 
   # ПРАВИЛО №2: Прямое соединение для Blizzard
   - DOMAIN-SUFFIX,battle.net,DIRECT
