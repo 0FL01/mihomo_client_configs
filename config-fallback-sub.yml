@@ -123,6 +123,17 @@ proxy-groups:
     use:
       - subscription
 
+  # Скрыть группу GLOBAL
+  - name: GLOBAL
+    type: select
+    hidden: true
+    proxies:
+      - PROXY AUTO
+      - PROXY MANUAL
+      - PROXY FASTEST
+      - PROXY FAILOVER
+      - DIRECT
+
 # --- НАСТРОЙКИ GEO-ДАННЫХ ---
 geox-url:
   geosite: "https://github.com/v2fly/domain-list-community/releases/latest/download/dlc.dat"
