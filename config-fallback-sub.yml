@@ -173,10 +173,8 @@ rules:
   - GEOSITE,MOZILLA,DIRECT
   - GEOSITE,XIAOMI,DIRECT
   - GEOSITE,CN,DIRECT
-  - DOMAIN-SUFFIX,microsoft.com,DIRECT
+  - GEOSITE,OZON,DIRECT
   - DOMAIN-SUFFIX,avito.st,DIRECT
-  - DOMAIN-SUFFIX,ozonusercontent.com,DIRECT
-  - DOMAIN-SUFFIX,freedns.controld.com,DIRECT
   - DOMAIN-SUFFIX,googlevideo.com,MAIN MODE
 
   # ПРАВИЛО №6: Прямое соединение для российских IP
