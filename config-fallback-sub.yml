@@ -129,7 +129,7 @@ proxy-groups:
 # --- НАСТРОЙКИ GEO-ДАННЫХ ---
 geox-url:
   geosite: "https://github.com/v2fly/domain-list-community/releases/latest/download/dlc.dat"
-  geoip: "https://github.com/0FL01/meta-rules-dat_FOR_RU_REGION/releases/latest/download/geoip.dat"
+  geoip: "https://github.com/0FL01/meta-rules-dat_for_RU_region/releases/latest/download/geoip.dat"
 
 # --- ПРОВАЙДЕРЫ ПРАВИЛ ---
 rule-providers:
