@@ -159,18 +159,15 @@ rules:
   - DST-PORT,51413,DIRECT
 
   # ПРАВИЛО №4: Прямое соединение для российских и прочих доменов
-  - DOMAIN-SUFFIX,ru,DIRECT
-  - DOMAIN-SUFFIX,xn--p1ai,DIRECT
   - GEOSITE,category-ru,DIRECT
   - GEOSITE,category-gov-ru,DIRECT
-  - GEOSITE,yandex,DIRECT
-  - GEOSITE,vk,DIRECT
+  - DOMAIN-SUFFIX,ru,DIRECT
+  - DOMAIN-SUFFIX,xn--p1ai,DIRECT
   - GEOSITE,steam,DIRECT
   - GEOSITE,alibaba,DIRECT
   - GEOSITE,MOZILLA,DIRECT
   - GEOSITE,XIAOMI,DIRECT
   - GEOSITE,CN,DIRECT
-  - GEOSITE,OZON,DIRECT
   - DOMAIN-SUFFIX,avito.st,DIRECT
   - DOMAIN-SUFFIX,googlevideo.com,MAIN MODE
 
