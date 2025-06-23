@@ -46,18 +46,15 @@ dns:
     - 1.1.1.1
     - 208.67.222.222
     - 9.9.9.9
-    - system
   nameserver:
     - https://doh.opendns.com/dns-query
     - https://mozilla.cloudflare-dns.com/dns-query
     - tls://dns.adguard-dns.com
     - tls://one.one.one.one
-    - dns.opendns.com
   direct-nameserver:
     - 1.1.1.1
     - 208.67.222.222
     - 9.9.9.9
-    - system
   fallback:
     - tls://1.1.1.1
     - tls://9.9.9.9
@@ -197,4 +194,3 @@ rules:
 
   # ПРАВИЛО №8: Весь остальной трафик через ГЛАВНУЮ группу управления
   - MATCH,MAIN MODE
-
