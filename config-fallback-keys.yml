@@ -37,6 +37,10 @@ proxies:
     tls: true
     servername: server1.yourdomain.com
     udp: true
+    client-fingerprint: chrome
+    reality-opts:
+      public-key: public_key_1
+      short-id: short_id_1 # опционально (если нету, то пустое значение)
 
   - name: "VLESS-2"                             # Ключ №2
     type: vless
@@ -46,6 +50,11 @@ proxies:
     tls: true
     servername: server2.yourdomain.com
     udp: true
+    client-fingerprint: chrome
+    reality-opts:
+      public-key: public_key_2
+      short-id: short_id_2 # опционально (если нету, то пустое значение)
+
 
   - name: "VLESS-3"                             # Ключ №3
     type: vless
@@ -55,6 +64,10 @@ proxies:
     tls: true
     servername: server3.yourdomain.com
     udp: true
+    client-fingerprint: chrome
+    reality-opts:
+      public-key: public_key_3
+      short-id: short_id_3 # опционально (если нету, то пустое значение)
 
 # --- СЕКЦИЯ DNS ---
 dns:
@@ -167,16 +180,11 @@ rules:
   - GEOSITE,category-ads-all,REJECT
   - RULE-SET,oisd_big,REJECT
 
-  # ПРАВИЛО №1: Домен vless ключа всегда напрямую
-  - DOMAIN-SUFFIX,vless-key1-domain.com,DIRECT   # <----- ЗДЕСЬ УКАЗАТЬ ДОМЕНЫ VLESS КЛЮЧЕЙ, добавленые в "server: server1.yourdomain.com" (Если есть, т.е опционально)
-  - DOMAIN-SUFFIX,vless-key2-domain.com,DIRECT   # <----- ЗДЕСЬ УКАЗАТЬ ДОМЕНЫ VLESS КЛЮЧЕЙ, добавленые в "server: server2.yourdomain.com" (Если есть, т.е опционально)
-  - DOMAIN-SUFFIX,vless-key3-domain.com,DIRECT   # <----- ЗДЕСЬ УКАЗАТЬ ДОМЕНЫ VLESS КЛЮЧЕЙ, добавленые в "server: server3.yourdomain.com" (Если есть, т.е опционально)
-
-  # ПРАВИЛО №2: Прямое соединение для BitTorrent
+  # ПРАВИЛО №1: Прямое соединение для BitTorrent
   - DST-PORT,6881-6889,DIRECT
   - DST-PORT,51413,DIRECT
 
-  # ПРАВИЛО №3: Прямое соединение для российских и прочих доменов
+  # ПРАВИЛО №2: Прямое соединение для российских и прочих доменов
   - GEOSITE,category-ru,DIRECT
   - GEOSITE,category-gov-ru,DIRECT
   - DOMAIN-SUFFIX,ru,DIRECT
@@ -189,11 +197,11 @@ rules:
   - DOMAIN-SUFFIX,avito.st,DIRECT
   - DOMAIN-SUFFIX,googlevideo.com,MAIN MODE
 
-  # ПРАВИЛО №4: Прямое соединение для российских IP
+  # ПРАВИЛО №3: Прямое соединение для российских IP
   - GEOIP,RU,DIRECT
 
-  # ПРАВИЛО №5: Блокировка QUIC
+  # ПРАВИЛО №4: Блокировка QUIC
   - AND,((NETWORK,UDP),(DST-PORT,443)),REJECT
 
-  # ПРАВИЛО №6: Весь остальной трафик через ГЛАВНУЮ группу управления
+  # ПРАВИЛО №5: Весь остальной трафик через ГЛАВНУЮ группу управления
   - MATCH,MAIN MODE

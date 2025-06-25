@@ -1,0 +1,260 @@
+listeners:
+  - name: tproxy
+    type: tproxy
+    port: 1181
+
+# --- ОБЩИЕ НАСТРОЙКИ ЯДРА ---
+mixed-port: 1080
+tcp-concurrent: true
+allow-lan: true
+mode: rule
+log-level: silent
+ipv6: false
+external-controller: 0.0.0.0:9090
+external-ui: ./zash
+external-ui-url: "https://github.com/Zephyruso/zashboard/releases/latest/download/dist-cdn-fonts.zip"
+geodata-mode: true
+profile:
+  store-selected: true
+find-process-mode: "off"
+
+# --- НАСТРОЙКИ СНИФФЕРА ---
+sniffer:
+  enable: true
+  force-dns-mapping: true
+  sniff:
+    HTTP:
+      ports: [80]
+      override-destination: true
+    TLS:
+      ports: [443]
+    QUIC:
+      ports: [443]
+
+# --- СПИСОК ПРОКСИ-СЕРВЕРОВ (КЛЮЧИ) ---
+proxies:
+  # Ключ для Финляндии
+  - name: '🇫🇮 Finland #1'
+    type: vless
+    server: fi-proxy.example.com
+    port: 443
+    uuid: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+    udp: true
+    tls: true
+    flow: xtls-rprx-vision
+    servername: fi-proxy.example.com
+    client-fingerprint: chrome
+    reality-opts:
+      public-key: xK9P75YczqJDjXIaN2v4flLqJ25bXKdW98SdqK8TmHY
+      short-id:     # Опционально, если нету, то пустое значение
+  # Ключ для Германии
+  - name: '🇩🇪 Germany #1'
+    type: vless
+    server: de-proxy.example.com
+    port: 443
+    uuid: b2c3d4e5-f6g7-8901-bcde-f23456789012
+    udp: true
+    tls: true
+    flow: xtls-rprx-vision
+    servername: de-proxy.example.com
+    client-fingerprint: chrome
+    reality-opts:
+      public-key: mN8Q86ZdArKEkYJbO3w5gmMrK36cYLeX09TerL9UnIZ
+      short-id:     # Опционально, если нету, то пустое значение
+
+  # Ключ для России
+  - name: '🇷🇺 Russia #1 (AD FREE)'
+    type: vless
+    server: ru-proxy.example.com
+    port: 443
+    uuid: c3d4e5f6-g7h8-9012-cdef-345678901234
+    udp: true
+    tls: true
+    flow: xtls-rprx-vision
+    servername: ru-proxy.example.com
+    client-fingerprint: chrome
+    reality-opts:
+      public-key: pQ9R97aeBsLFlZKcP4x6hnNsL47dZMfY10UfsM0VoJa
+      short-id:     # Опционально, если нету, то пустое значение
+
+# --- СЕКЦИЯ DNS ---
+dns:
+  enable: true
+  listen: 0.0.0.0:7874
+  ipv6: false
+  cache-algorithm: arc
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  default-nameserver:
+    - 1.1.1.1
+    - 8.8.8.8
+    - 208.67.222.222
+    - 208.67.220.220
+  nameserver:
+    - https://dns10.quad9.net/dns-query
+    - https://dns.aa.net.uk/dns-query
+    - https://doh.opendns.com/dns-query
+    - tls://dns.quad9.net
+    - tls://1.1.1.1
+    - tls://dns.opendns.com
+  fake-ip-filter-mode: blacklist
+  fake-ip-filter:
+    - '*.lan'
+    - '*.local'
+    - +.pool.ntp.org
+    - +.msftconnecttest.com
+    - +.3gppnetwork.org
+    - '+.just-another-domain.uk'
+
+# --- ГРУППЫ ПРОКСИ (ПОЛИТИКИ) ---
+proxy-groups:
+
+  - name: 'Google'
+    type: select
+    proxies:
+      - '🇫🇮 Finland #1'
+      - '🇩🇪 Germany #1'
+      - '🇷🇺 Russia #1 (AD FREE)'
+      - DIRECT
+    icon: "https://www.svgrepo.com/show/475656/google-color.svg"
+
+  - name: 'Microsoft'
+    type: select
+    proxies:
+      - '🇫🇮 Finland #1'
+      - '🇩🇪 Germany #1'
+      - '🇷🇺 Russia #1 (AD FREE)'
+      - DIRECT
+    icon: "https://www.svgrepo.com/show/452062/microsoft.svg"
+
+  - name: 'GitHub'
+    type: select
+    proxies:
+      - '🇫🇮 Finland #1'
+      - '🇩🇪 Germany #1'
+      - '🇷🇺 Russia #1 (AD FREE)'
+      - DIRECT
+    icon: "https://www.svgrepo.com/show/344880/github.svg"
+
+  - name: 'Telegram'
+    type: select
+    proxies:
+      - '🇫🇮 Finland #1'
+      - '🇩🇪 Germany #1'
+      - '🇷🇺 Russia #1 (AD FREE)'
+      - DIRECT
+    icon: "https://www.svgrepo.com/show/354443/telegram.svg"
+
+  - name: 'Российский трафик'
+    type: select
+    proxies:
+      - '🇫🇮 Finland #1'
+      - '🇩🇪 Germany #1'
+      - '🇷🇺 Russia #1 (AD FREE)'
+      - DIRECT
+    icon: "https://www.svgrepo.com/show/508628/flag-ru.svg"
+
+  - name: 'Остальной трафик'
+    type: select
+    exclude-filter: "(?i)Russia|RU"
+    proxies:
+      - '🇫🇮 Finland #1'
+      - '🇩🇪 Germany #1'
+      - '🇷🇺 Russia #1 (AD FREE)'
+      - DIRECT
+    icon: "https://www.svgrepo.com/show/440486/earth.svg"
+
+  - name: 'Блокировка рекламы'
+    type: select
+    proxies:
+      - REJECT
+      - DIRECT
+      - '🇫🇮 Finland #1'
+      - '🇩🇪 Germany #1'
+      - '🇷🇺 Russia #1 (AD FREE)'
+    icon: "https://www.svgrepo.com/show/305648/adblock.svg"
+
+  - name: 'YouTube'
+    type: select
+    proxies:
+      - '🇫🇮 Finland #1'
+      - '🇩🇪 Germany #1'
+      - '🇷🇺 Russia #1 (AD FREE)'
+      - DIRECT
+    icon: "https://www.svgrepo.com/show/13671/youtube.svg"
+
+  - name: 'Steam'
+    type: select
+    proxies:
+      - '🇫🇮 Finland #1'
+      - '🇩🇪 Germany #1'
+      - '🇷🇺 Russia #1 (AD FREE)'
+      - DIRECT
+    icon: "https://www.svgrepo.com/show/473800/steam.svg"
+
+  - name: GLOBAL
+    type: select
+    hidden: true
+    proxies:
+      - 'YouTube'
+      - 'Google'
+      - 'Steam'
+      - 'Microsoft'
+      - 'GitHub'
+      - 'Telegram'
+      - 'Российский трафик'
+      - 'Остальной трафик'
+      - 'Блокировка рекламы'
+      - DIRECT
+
+# --- НАСТРОЙКИ GEO-ДАННЫХ ---
+geox-url:
+  geosite: "https://github.com/v2fly/domain-list-community/releases/latest/download/dlc.dat"
+  geoip: "https://github.com/0FL01/meta-rules-dat_for_RU_region/releases/latest/download/geoip.dat"
+
+# --- ПРОВАЙДЕРЫ ПРАВИЛ ---
+rule-providers:
+  hagezi_pro:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://github.com/zxc-rv/ad-filter/releases/latest/download/adlist.mrs
+    path: ./adblock/adlist.mrs
+    interval: 86400
+
+
+# --- ПРАВИЛА МАРШРУТИЗАЦИИ ---
+rules:
+  # ПРАВИЛО №0: Блокировка рекламы и трекеров
+  - GEOSITE,category-ads-all,Блокировка рекламы
+  - RULE-SET,hagezi_pro,Блокировка рекламы
+
+  # ПРАВИЛО №1: Системные правила
+  - GEOIP,private,DIRECT,no-resolve
+
+  # ПРАВИЛО №2: Российский трафик
+  - DOMAIN-SUFFIX,avito.ru,DIRECT    # Авито обычно не пускает с прокси, по этому рекомендуется использовать DIRECT
+  - DOMAIN-SUFFIX,avito.st,DIRECT    # Авито обычно не пускает с прокси, по этому рекомендуется использовать DIRECT
+  - GEOSITE,category-ru,Российский трафик
+  - DOMAIN-SUFFIX,ru,Российский трафик
+  - DOMAIN-SUFFIX,xn--p1ai,Российский трафик
+  - DOMAIN-SUFFIX,yandex-pogoda.static-storage.net,Российский трафик
+  - GEOSITE,category-gov-ru,Российский трафик
+  - GEOIP,RU,Российский трафик,no-resolve
+
+  # ПРАВИЛО №3: Правила для конкретных сервисов
+  - GEOSITE,steam,Steam
+  - DOMAIN-SUFFIX,rutracker.org,Остальной трафик
+  - DOMAIN-SUFFIX,nnmclub.to,Остальной трафик
+  - GEOSITE,youtube,YouTube
+  - GEOSITE,google,Google
+  - GEOSITE,github,GitHub
+  - GEOSITE,microsoft,Microsoft
+  - GEOSITE,telegram,Telegram
+  - GEOSITE,alibaba,Российский трафик
+  - GEOSITE,MOZILLA,Российский трафик
+  - GEOSITE,XIAOMI,Российский трафик
+  - GEOSITE,CN,Российский трафик
+
+  # ПРАВИЛО №4: Весь остальной трафик
+  - MATCH,Остальной трафик
