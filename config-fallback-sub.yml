@@ -96,7 +96,7 @@ proxy-groups:
       - DIRECT
     url: http://www.msftncsi.com/ncsi.txt
     # Интервал для проверки, чтобы "отлипнуть" от DIRECT/PROXY FAILOVER и вернуться к PROXY FASTEST
-    interval: 30
+    interval: 200
 
   # Группа для выбора самого быстрого из ЖИВЫХ прокси.
   - name: PROXY FASTEST
@@ -115,7 +115,7 @@ proxy-groups:
     use:
       - subscription
     url: http://www.msftncsi.com/ncsi.txt
-    interval: 60
+    interval: 200
 
   # Группа для ручного выбора сервера из подписки.
   - name: PROXY MANUAL
