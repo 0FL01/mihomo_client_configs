@@ -42,7 +42,7 @@ proxies:
     udp: true
     tls: true
     flow: xtls-rprx-vision
-    servername: fi-proxy.example.com
+    servername: fi-proxy.example.com  <----- ЗДЕСЬ УКАЗАТЬ SNI (СЕРВИС ПОД КОТОРЫЙ ИДЁТ МАСКИРОВКА, СОГЛАСНО НАСТРОЙКАМ В 3X-UI OR ETC)
     client-fingerprint: chrome
     reality-opts:
       public-key: xK9P75YczqJDjXIaN2v4flLqJ25bXKdW98SdqK8TmHY
@@ -56,7 +56,7 @@ proxies:
     udp: true
     tls: true
     flow: xtls-rprx-vision
-    servername: de-proxy.example.com
+    servername: de-proxy.example.com   <----- ЗДЕСЬ УКАЗАТЬ SNI (СЕРВИС ПОД КОТОРЫЙ ИДЁТ МАСКИРОВКА, СОГЛАСНО НАСТРОЙКАМ В 3X-UI OR ETC)
     client-fingerprint: chrome
     reality-opts:
       public-key: mN8Q86ZdArKEkYJbO3w5gmMrK36cYLeX09TerL9UnIZ
@@ -71,7 +71,7 @@ proxies:
     udp: true
     tls: true
     flow: xtls-rprx-vision
-    servername: ru-proxy.example.com
+    servername: ru-proxy.example.com    <----- ЗДЕСЬ УКАЗАТЬ SNI (СЕРВИС ПОД КОТОРЫЙ ИДЁТ МАСКИРОВКА, СОГЛАСНО НАСТРОЙКАМ В 3X-UI OR ETC)
     client-fingerprint: chrome
     reality-opts:
       public-key: pQ9R97aeBsLFlZKcP4x6hnNsL47dZMfY10UfsM0VoJa
