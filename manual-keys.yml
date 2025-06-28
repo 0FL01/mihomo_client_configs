@@ -210,7 +210,7 @@ proxy-groups:
 # --- НАСТРОЙКИ GEO-ДАННЫХ ---
 geox-url:
   geosite: "https://github.com/v2fly/domain-list-community/releases/latest/download/dlc.dat"
-  geoip: "https://github.com/0FL01/meta-rules-dat_for_RU_region/releases/latest/download/geoip.dat"
+  geoip: "https://github.com/MetaCubeX/meta-rules-dat/releases/latest/download/geoip.dat"
 
 # --- ПРОВАЙДЕРЫ ПРАВИЛ ---
 rule-providers:
@@ -251,6 +251,7 @@ rules:
   - GEOSITE,github,GitHub
   - GEOSITE,microsoft,Microsoft
   - GEOSITE,telegram,Telegram
+  - GEOIP,telegram,Telegram
   - GEOSITE,alibaba,Российский трафик
   - GEOSITE,MOZILLA,Российский трафик
   - GEOSITE,XIAOMI,Российский трафик
