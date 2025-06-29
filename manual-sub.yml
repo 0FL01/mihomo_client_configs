@@ -70,8 +70,7 @@ dns:
     - +.pool.ntp.org
     - +.msftconnecttest.com
     - +.3gppnetwork.org
-    - '+.just-another-domain.uk'
-
+    
 # --- ГРУППЫ ПРОКСИ (ПОЛИТИКИ) ---
 proxy-groups:
 
